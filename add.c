@@ -1,29 +1,33 @@
 #include "monty.h"
-
 /**
- * add - adds the top two elements of the stack.
- * @stack: double pointer to the head of the stack
- * @line_number: the number of the line in file
+ * add_dnodeint - adds a new node at the beginning of a linked list
+ * @stack: a pointer to the linked list
+ * @line_number: the line number
  *
  * Return: void
  */
-void add(stack_t **stack, unsigned int line_number)
+void
+add_dnodeint(stack_t **stack,
+	unsigned int line_number __attribute__((unused)))
 {
-	stack_t *temp;
-	int sum;
+	stack_t *new_node;
 
-	if (!stack || !(*stack) || !(*stack)->next)
+	new_node = malloc(sizeof(stack_t));
+	if (new_node == NULL)
+		push_error(11);
+	if (_isdigit(data.args[1]) > 0)
+		push_error(16);
+	new_node->n = atoi(data.args[1]);
+	if (*stack == NULL)
 	{
-		printf("L%u: can't add, stack too short\n", line_number);
-		exit(EXIT_FAILURE);
+		new_node->prev = NULL;
+		new_node->next = NULL;
 	}
-
-	temp = *stack;
-
-	sum = temp->n + temp->next->n;
-	temp->next->n = sum;
-
-	*stack = temp->next;
-
-	free(temp);
+	else
+	{
+		(*stack)->prev = new_node;
+		new_node->next = *stack;
+		new_node->prev = NULL;
+	}
+	*stack = new_node;
 }
